@@ -6,10 +6,6 @@ import {from} from 'rxjs/observable/from'
 import { createAction } from 'typesafe-actions'
 import { Merchant } from '../common/Merchant'
 
-export interface FetchMerchantAction extends Action<string> {
-
-}
-
 export const fetchMerchantApi = (id:string) => {
   const request = axios({
     headers: [],

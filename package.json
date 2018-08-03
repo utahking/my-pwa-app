@@ -28,7 +28,6 @@
     "server": "json-server --watch --port 3001 ./src/api/db.json"
   },
   "devDependencies": {
-    "@types/axios": "^0.14.0",
     "@types/bootstrap": "^4.1.2",
     "@types/jest": "^23.3.1",
     "@types/node": "^10.5.4",
