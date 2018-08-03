@@ -1,60 +1,41 @@
-import axios, { AxiosPromise } from 'axios'
-import { Merchant } from '../common/Merchant'
-import * as constants from '../constants'
+ import axios from 'axios'
+import {ActionTypes} from '../constants'
 import { ROOT_URL } from './index'
-// import { RESET_ACTIVE_MERCHANT } from '../constants';
+import Action from './action'
+import { MerchantState } from '../types'
+import {from} from 'rxjs/observable/from'
+import { createAction } from 'typesafe-actions'
 
-export interface FetchMerchant {
-  type: constants.FETCH_MERCHANT,
-  payload: AxiosPromise<any>
+export interface FetchMerchantAction extends Action {
+  meta: {
+    id: string
+  }
 }
 
-export interface FetchMerchantSuccess {
-  type: constants.FETCH_MERCHANT_SUCCESS,
-  payload: Merchant
-}
-
-
-export interface FetchMerchantFailure {
-  type: constants.FETCH_MERCHANT_FAILURE,
-  payload: any
-}
-
-export interface ResetActiveMerchant {
-  type: constants.RESET_ACTIVE_MERCHANT
-}
-
-export type MerchantDetailAction = FetchMerchant | FetchMerchantSuccess | FetchMerchantFailure | ResetActiveMerchant
-
-export function fetchMerchant(id:string): FetchMerchant {
+export const fetchMerchantApi = (id:string) => {
   const request = axios({
     headers: [],
     method: 'get',
     url: `${ROOT_URL}/merchants/${id}`
-  })
-  return {
-    payload: request,
-    type: constants.FETCH_MERCHANT
-  }
+  }).then(response => response.data)
+  return from(request)
 }
 
-export function fetchMerchantSuccess(merchant: Merchant): FetchMerchantSuccess {
-  return {
-    payload: merchant,
-    type: constants.FETCH_MERCHANT_SUCCESS
-  }
-}
+export const fetchMerchant = createAction(ActionTypes.FetchMerchant, resolve => {
+  return (params:{id:string}) => resolve({  }, params)
+})
 
-export function fetchMerchantFailure(error: any): FetchMerchantFailure {
-  return {
-      payload: error,
-      type: constants.FETCH_MERCHANT_FAILURE
-  }
-}
+export const fetchMerchantSuccess = createAction(ActionTypes.FetchMerchantSuccess, resolve => {
+  return (payload: MerchantState) => resolve(payload)
+})
 
+export const fetchMerchantFailure = createAction(ActionTypes.FetchMerchantFailure, resolve => {
+  return (payload: Error) => resolve(payload)
+})
 
-export function resetActiveMerchants(): ResetActiveMerchant {
+export function resetActiveMerchants(): Action {
   return {
-    type: constants.RESET_ACTIVE_MERCHANT
+    type: ActionTypes.ResetActiveMerchant,
+    payload: {}
   }
 }

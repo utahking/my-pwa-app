@@ -1,20 +1,22 @@
 import { Merchant } from '../common/Merchant'
+import { MerchantData } from './MerchantData'
 
-export interface MerchantsList {
+export class MerchantsList {
     merchants: Merchant[]
     error: any
     loading: boolean
+    constructor (args?: {}){
+        Object.assign(this, args)
+    }
 }
 
-export interface MerchantData {
-    merchant: Merchant|null
-    error: any
-    loading: boolean
-}
-
-export interface StoreState {
+export interface MerchantState {
     merchantsList: MerchantsList
     newMerchant: MerchantData
     activeMerchant: MerchantData
     deletedMerchant: MerchantData
+}
+
+export interface StoreState {
+    merchantState: MerchantState
 }

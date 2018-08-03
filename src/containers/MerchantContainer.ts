@@ -1,22 +1,19 @@
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
-import {fetchMerchants,fetchMerchantsSuccess,fetchMerchantsFailure, MerchantsAction} from '../actions/merchants'
+import {fetchMerchants} from '../actions/merchants'
 import {MerchantsList} from '../components/MerchantsList'
 import {StoreState} from '../types/index'
+import Action from '../actions/action'
 
 
 function mapStateToProps(globalstate: StoreState) {
-  return{merchantsList: globalstate.merchantsList}
+  return{merchantsList: globalstate.merchantState.merchantsList}
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<MerchantsAction>) => {
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
     return {        
         fetchPosts: () => {
-          dispatch(fetchMerchants()).payload.then((response: any) => {
-                !response.error ? dispatch(fetchMerchantsSuccess(response.data)) : dispatch(fetchMerchantsFailure(response.payload.data))
-              }).catch((reason: any)=>{
-                dispatch(fetchMerchantsFailure(reason))
-              })
+          dispatch(fetchMerchants())
         }
       }
 }

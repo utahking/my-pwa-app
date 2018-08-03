@@ -1,13 +1,13 @@
 import * as React from 'react'
 // import { Link } from 'react-router';
-import * as merchantTypes from '../types/index'
+import {MerchantData} from '../types/MerchantData'
 import { Merchant } from '../common/Merchant'
 // import {Table} from 'react-bootstrap';
 import { BidsList } from './BidsList'
 
 export interface MerchantDetailsProps  
 {
-    activeMerchant:merchantTypes.MerchantData
+    activeMerchant:MerchantData
     merchantId:string
     fetchMerchant:(id:string)=>any
 }

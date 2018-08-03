@@ -1,9 +1,10 @@
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 // import { fetchPosts, resetDeletedPost, deletePost, deletePostSuccess, deletePostFailure } from '../actions/posts';
-import {fetchMerchant,fetchMerchantSuccess,fetchMerchantFailure,MerchantDetailAction} from '../actions/merchantdetails'
+import {fetchMerchant} from '../actions/merchantdetails'
 import {MerchantDetail} from '../components/MerchantDetails'
 import {StoreState} from '../types/index'
+import Action from '../actions/action'
 
 export interface MerchantDetailsContainerProps  
 {   
@@ -11,17 +12,13 @@ export interface MerchantDetailsContainerProps
 }
 
 function mapStateToProps(globalstate: StoreState, ownProps:any) {    
-    return{activeMerchant: globalstate.activeMerchant, merchantId: ownProps.match.params.id}
+    return{activeMerchant: globalstate.merchantState.activeMerchant, merchantId: ownProps.match.params.id}
   }
 
-const mapDispatchToProps = (dispatch:Dispatch<MerchantDetailAction>) => {
+const mapDispatchToProps = (dispatch:Dispatch<Action>) => {
     return {        
-        fetchMerchant: (id:string) => {
-          dispatch(fetchMerchant(id)).payload.then((response:any) => {
-                !response.error ? dispatch(fetchMerchantSuccess(response.data)) : dispatch(fetchMerchantFailure(response.payload.data))
-              }).catch((reason:any)=>{
-                dispatch(fetchMerchantFailure(reason))
-              })
+        fetchMerchant: (idIn:string) => {
+          dispatch(fetchMerchant({id:idIn}))
         }
       }
 }
