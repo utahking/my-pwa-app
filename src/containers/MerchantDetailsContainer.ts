@@ -15,10 +15,10 @@ function mapStateToProps(globalstate: StoreState, ownProps:any) {
     return{activeMerchant: globalstate.merchantState.activeMerchant, merchantId: ownProps.match.params.id}
   }
 
-const mapDispatchToProps = (dispatch:Dispatch<Action>) => {
+const mapDispatchToProps = (dispatch:Dispatch<Action<string>>) => {
     return {        
-        fetchMerchant: (idIn:string) => {
-          dispatch(fetchMerchant({id:idIn}))
+        fetchMerchant: (id:string) => {
+          dispatch(fetchMerchant(id))
         }
       }
 }

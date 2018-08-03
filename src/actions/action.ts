@@ -1,8 +1,8 @@
 import { ActionTypes } from "../constants"
 
-export default interface Action {
+export default interface Action<P> {
     type: ActionTypes
-    payload: {}
+    payload: P
   }
 
 //   export default interface Action {

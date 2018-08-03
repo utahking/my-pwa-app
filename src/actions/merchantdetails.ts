@@ -2,14 +2,12 @@
 import {ActionTypes} from '../constants'
 import { ROOT_URL } from './index'
 import Action from './action'
-import { MerchantState } from '../types'
 import {from} from 'rxjs/observable/from'
 import { createAction } from 'typesafe-actions'
+import { Merchant } from '../common/Merchant'
 
-export interface FetchMerchantAction extends Action {
-  meta: {
-    id: string
-  }
+export interface FetchMerchantAction extends Action<string> {
+
 }
 
 export const fetchMerchantApi = (id:string) => {
@@ -22,18 +20,18 @@ export const fetchMerchantApi = (id:string) => {
 }
 
 export const fetchMerchant = createAction(ActionTypes.FetchMerchant, resolve => {
-  return (params:{id:string}) => resolve({  }, params)
+  return (id:string) => resolve(id)
 })
 
 export const fetchMerchantSuccess = createAction(ActionTypes.FetchMerchantSuccess, resolve => {
-  return (payload: MerchantState) => resolve(payload)
+  return (payload: Merchant) => resolve(payload)
 })
 
 export const fetchMerchantFailure = createAction(ActionTypes.FetchMerchantFailure, resolve => {
   return (payload: Error) => resolve(payload)
 })
 
-export function resetActiveMerchants(): Action {
+export function resetActiveMerchants(): Action<{}> {
   return {
     type: ActionTypes.ResetActiveMerchant,
     payload: {}

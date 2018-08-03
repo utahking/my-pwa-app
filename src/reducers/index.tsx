@@ -8,7 +8,8 @@ import {of} from 'rxjs/observable/of'
 import { Epic } from 'redux-observable'
 import Action from '../actions/action'
 import { MerchantData } from '../types/MerchantData'
-import { fetchMerchantApi, FetchMerchantAction, fetchMerchantSuccess, fetchMerchantFailure } from '../actions/merchantdetails'
+import { fetchMerchantApi, fetchMerchantSuccess, fetchMerchantFailure } from '../actions/merchantdetails'
+import { Merchant } from '../common/Merchant'
 
 export const  INITIAL_STATE:StoreState = { 
     merchantState: {
@@ -20,23 +21,23 @@ export const  INITIAL_STATE:StoreState = {
 }
 
 
-export const merchantsFetchEpic: Epic<Action> = (action$) => 
+export const merchantsFetchEpic: Epic<Action<Merchant[]|Error>> = (action$) => 
     action$.ofType(ActionTypes.FetchMerchants)
-        .mergeMap((action: Action) =>
+        .mergeMap((action: Action<{}>) =>
         fetchMerchantsApi()
         .map(payload => fetchMerchantsSuccess(payload))
         .catch(err => of(fetchMerchantsFailure(err)))
 )
 
-export const merchantFetchEpic: Epic<Action> = action$ =>
+export const merchantFetchEpic: Epic<Action<string|Merchant|Error>> = action$ =>
     action$.ofType(ActionTypes.FetchMerchant)
-        .mergeMap((action: FetchMerchantAction) => 
-        fetchMerchantApi(action.meta.id)
+        .mergeMap((action: Action<string>) => 
+        fetchMerchantApi(action.payload)
         .map(payload => fetchMerchantSuccess(payload))
         .catch(err => of(fetchMerchantFailure(err)))
 )
 
-export function merchantsReducer (state:StoreState=INITIAL_STATE,action:Action):StoreState  {
+export function merchantsReducer (state:StoreState=INITIAL_STATE,action:Action<string|Merchant[]|Error>):StoreState  {
     let error:any
 
     switch(action.type){

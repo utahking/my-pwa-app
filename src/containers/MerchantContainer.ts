@@ -10,7 +10,7 @@ function mapStateToProps(globalstate: StoreState) {
   return{merchantsList: globalstate.merchantState.merchantsList}
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
+const mapDispatchToProps = (dispatch: Dispatch<Action<{}>>) => {
     return {        
         fetchPosts: () => {
           dispatch(fetchMerchants())

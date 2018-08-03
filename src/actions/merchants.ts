@@ -1,30 +1,9 @@
 import axios from 'axios'
 import {ActionTypes} from '../constants/index'
 import { ROOT_URL } from './index'
-// import { Observable } from 'rxjs'
 import { createAction } from 'typesafe-actions'
-import { MerchantState } from '../types'
 import {from} from 'rxjs/observable/from'
-
-// export interface FetchMerchants extends Action {
-    
-// }
-
-// export interface FetchMerchantsSuccess extends Action {
-//     type: ActionTypes.FetchMerchantsSuccess
-// }
-
-
-// export interface FetchMerchantsFailure extends Action {
-//     type: ActionTypes.FetchMerchantsFailure
-// }
-
-// export interface ResetMerchants extends Action {
-//     type: ActionTypes.ResetMerchants
-// }
-
-// export type MerchantsAction = FetchMerchants | FetchMerchantsSuccess | FetchMerchantsFailure | ResetMerchants
-
+import { Merchant } from '../common/Merchant'
 
 export const fetchMerchantsApi  = () => {
     const request = axios({
@@ -36,13 +15,11 @@ export const fetchMerchantsApi  = () => {
 }
 
 export const fetchMerchants = createAction(ActionTypes.FetchMerchants, resolve => {
-    return () => resolve( {
-        payload: {}
-    })
+    return () => resolve({})
 })
 
 export const fetchMerchantsSuccess = createAction(ActionTypes.FetchMerchantsSuccess, resolve => {
-        return (payload: MerchantState) => resolve(payload)
+        return (payload: Merchant[]) => resolve(payload)
 })
 
 export const fetchMerchantsFailure = createAction(ActionTypes.FetchMerchantsFailure, resolve => {
