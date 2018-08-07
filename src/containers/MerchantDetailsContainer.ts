@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
-// import { fetchPosts, resetDeletedPost, deletePost, deletePostSuccess, deletePostFailure } from '../actions/posts';
-import {fetchMerchant} from '../actions/merchantdetails'
+import {fetchMerchantRequest} from '../actions/merchantdetails'
 import {MerchantDetail} from '../components/MerchantDetails'
 import {StoreState} from '../types/index'
 import Action from '../actions/action'
@@ -18,7 +17,7 @@ function mapStateToProps(globalstate: StoreState, ownProps:any) {
 const mapDispatchToProps = (dispatch:Dispatch<Action<string>>) => {
     return {        
         fetchMerchant: (id:string) => {
-          dispatch(fetchMerchant(id))
+          dispatch(fetchMerchantRequest(id))
         }
       }
 }
