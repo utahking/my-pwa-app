@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {ActionTypes} from '../constants/index'
 import { ROOT_URL } from './index'
-import { createAction } from 'typesafe-actions'
+import { createAction, createAsyncAction } from 'typesafe-actions'
 import {from} from 'rxjs/observable/from'
 import { Merchant } from '../common/Merchant'
 
@@ -14,16 +14,18 @@ export const fetchMerchantsApi  = () => {
     return from(request)
 }
 
-export const fetchMerchants = createAction(ActionTypes.FetchMerchants, resolve => {
-    return () => resolve({})
-})
+export const fetchMerchantsAsync = createAsyncAction(ActionTypes.FetchMerchants, ActionTypes.FetchMerchantsSuccess, ActionTypes.FetchMerchantsFailure)<void, Merchant[], Error>()
 
-export const fetchMerchantsSuccess = createAction(ActionTypes.FetchMerchantsSuccess, resolve => {
-        return (payload: Merchant[]) => resolve(payload)
-})
+// export const fetchMerchants = createAction(ActionTypes.FetchMerchants, resolve => {
+//     return () => resolve()
+// })
 
-export const fetchMerchantsFailure = createAction(ActionTypes.FetchMerchantsFailure, resolve => {
-    return (payload: Error) => resolve(payload)
-  })
+// export const fetchMerchantsSuccess = createAction(ActionTypes.FetchMerchantsSuccess, resolve => {
+//         return (payload: Merchant[]) => resolve(payload)
+// })
+
+// export const fetchMerchantsFailure = createAction(ActionTypes.FetchMerchantsFailure, resolve => {
+//     return (payload: Error) => resolve(payload)
+//   })
 
 export const resetMerchants = createAction(ActionTypes.ResetMerchants)

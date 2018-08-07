@@ -1,12 +1,13 @@
 import { applyMiddleware, compose, createStore} from 'redux'
 import {createLogger} from 'redux-logger'
 import thunk from 'redux-thunk'
-import {merchantsReducer, merchantsFetchEpic, merchantFetchEpic} from '../reducers'
+import {merchantsReducer} from '../reducers'
+import epics from '../epics'
 import { StoreState } from '../types/index'
-import { combineEpics, createEpicMiddleware } from 'redux-observable'
+import { createEpicMiddleware } from 'redux-observable'
 
 const configureStore = (preloadedState:StoreState) => {
-    const epics = combineEpics(...[merchantsFetchEpic,merchantFetchEpic],)
+    // const epics = combineEpics(...[merchantsFetchEpic,merchantFetchEpic],)
     const epicMiddleware = createEpicMiddleware()
     const middlewares = [
         thunk,
